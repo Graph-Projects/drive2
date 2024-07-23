@@ -15,7 +15,7 @@ const Catalogue = () => {
         />
         {/* <SearchBar /> */}
         <div>
-          <NavLink to={"Inscription"}>Inscription / Connexion</NavLink>
+          <NavLink to={"drive/login"}>Inscription / Connexion</NavLink>
         </div>
       </div>
       <div className="flex justify-center m-3">
