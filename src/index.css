@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+h1{
+    font-size: 40px;
+    font-weight: 600;
+}
+h2{
+    font-size: 30px;
+    font-weight: 600;
+}
+h3{
+    font-size: 20px;
+    font-weight: 600;
+}
+.nav-active{
+    border-bottom: solid green;
+    color: green;
+}
+.btn{
+    width:200px;
+    background-color:#00B207 ;
+    color: white;
+}
+.second-container{
+    background-color: #EDF2EE;
+}
+.container-steps{
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+    width: 80%;
+}
+.step{
+    display: flex;
+    flex-direction: column;
+    width:20%;
+    height: 150px;
+    justify-content: center;
+}
+.products-pres{
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+    background-color: #FFFFFF;
+    padding: 1em;
+    margin-bottom: 2em;
+}
+.input-form{
+    border: solid 1px;
+    border-radius: 2px;
+}
