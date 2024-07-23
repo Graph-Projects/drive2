@@ -7,6 +7,8 @@ import Card from "../components/Card/Card";
 import Footer from "../components/Footer/Footer";
 import CategoriesCard from "../components/Categories/CategoriesCard";
 
+//test pour la branche ;
+
 const Homepage = () => {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
