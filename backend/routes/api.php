@@ -19,7 +19,7 @@ Route::prefix('v1')->group(function () {
     })->middleware('auth:sanctum');
 });
 
-
+//test
 
 Route::prefix('v1')->group(function () {
     Route::post('/register', [AuthController::class, 'register']);
