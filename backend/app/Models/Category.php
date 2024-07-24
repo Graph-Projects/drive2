@@ -8,19 +8,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Category extends Model
 {
     use HasFactory;
-    protected $fillable = ['name','id', 'description', 'image', 'parent_category',];
+    protected $fillable = ['name','id'];
 
+    public function subCategories()
+    {
+        return $this->belongsToMany(SubCategory::class, 'category_sub_categories');
+    }
     public function products(){
         $this->belongsToMany(Product::class);
-    }
-
-    public function parentCategory()
-    {
-        return $this->belongsTo(Category::class, 'parent_category');
-    }
-
-    public function childCategories()
-    {
-        return $this->hasMany(Category::class, 'parent_category');
     }
 }

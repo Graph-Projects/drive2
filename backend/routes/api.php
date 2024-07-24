@@ -19,7 +19,7 @@ Route::prefix('v1')->group(function () {
     })->middleware('auth:sanctum');
 });
 
-//test
+
 
 Route::prefix('v1')->group(function () {
     Route::post('/register', [AuthController::class, 'register']);
@@ -50,6 +50,21 @@ Route::prefix('v1')->group(function () {
     Route::post('/categories', [CategoryController::class, 'store']);
     Route::put('/categories/{id}', [CategoryController::class, 'update']);
     Route::delete('/categories/{id}', [CategoryController::class, 'destroy']);
+});
+
+Route::prefix('v1')->group(function () {
+    Route::get('/subCategory', [SubCategoryController::class, 'index']);
+    Route::get('/subCategory/{id}', [SubCategoryController::class, 'show']);
+    Route::post('/subCategory', [SubCategoryController::class, 'store']);
+    Route::put('/subCategory/{id}', [SubCategoryController::class, 'update']);
+    Route::delete('/subCategory/{id}', [SubCategoryController::class, 'destroy']);
+});
+
+Route::prefix('v1')->group(function () {
+    Route::post('/categories/{categoryId}/sub-categories/{subCategoryId}', [CategorySubCategoryController::class, 'attachSubCategory']);
+    Route::delete('/categories/{categoryId}/sub-categories/{subCategoryId}', [CategorySubCategoryController::class, 'detachSubCategory']);
+    Route::get('/categories/{categoryId}/sub-categories', [CategorySubCategoryController::class, 'listSubCategories']);
+    Route::get('/sub-categories/{subCategoryId}/categories', [CategorySubCategoryController::class, 'listCategories']);
 });
 
 Route::prefix('v1')->group(function () {

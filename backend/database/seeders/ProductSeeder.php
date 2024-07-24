@@ -19,3 +19,7 @@ class ProductSeeder extends Seeder
         ]);
     }
 }
+
+/*$category = Category::factory()
+            ->has(Product::factory()->count(3))
+            ->create();*/

@@ -31,7 +31,7 @@ class FeedbackController extends Controller
     $feedback->feedback = $request->feedback;
     $feedback->product_id = $request->product_id;
     $feedback->rating = $request->rating;
-    $feedback->user_id = $request->user_id;
+    $feedback->user_id = auth() -> user() -> id;
     $feedback->save();
 
     // Fetch the product
@@ -61,8 +61,7 @@ class FeedbackController extends Controller
 
     public function getUserFeedbacks()
     {
-        // $id = auth()->user()->id;
-        $id = 1;
+        $id = auth()->user()->id;
         return Feedback::where('user_id', $id)->get();
     }
 }

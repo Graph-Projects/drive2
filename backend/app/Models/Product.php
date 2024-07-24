@@ -16,11 +16,10 @@ class Product extends Model
         'description',
         'price',
         'stock',
-        'category_id',
     ];
 
     public function categories(){
-        return $this->belongsTo(Category::class);
+        return $this->belongsToMany(Category::class);
     }
 
     public function itemOrders()
