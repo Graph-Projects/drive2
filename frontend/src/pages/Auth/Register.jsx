@@ -56,7 +56,7 @@ const Register = () => {
         <Header />
       </div>
       <img src="../src/assets/images/Breadcrumbs.png" alt="image legumes" />
-      <div className="mt-20 flex items-center justify-center mb-20">
+      <div className="mt-20 flex items-center justify-center mb-32">
         <div className="container-form flex flex-col w-96 h-96 items-center justify-center rounded">
           <h2 className="mb-5">Créer mon compte</h2>
           <form
