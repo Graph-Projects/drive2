@@ -1,8 +1,43 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
+import { useState } from "react";
+import axios from "axios";
 
 const Login = () => {
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+
+    const data = {
+      name: username,
+      password: password,
+      email: email,
+    };
+
+    try {
+      axios
+        .post(`http://127.0.0.1:8000/api/v1/login`, data)
+        .then((response) => {
+          console.log(response);
+          const token = response.data.acces_token; // Supposons que le token est dans response.data.token
+
+          // Sauvegarder le token dans le localStorage
+          localStorage.setItem("token", token);
+          navigate("/");
+        })
+        .catch((error) => {
+          console.error("There was an error with the login request:", error);
+        });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
     <>
       <div className="size-full bg-black h-7"></div>
@@ -19,17 +54,31 @@ const Login = () => {
       </div>
       <img src="../src/assets/images/Breadcrumbs.png" alt="image legumes" />
       <div className="mt-20 flex items-center justify-center mb-20">
-        <div className="container-form flex flex-col w-96 h-72 items-center justify-center rounded">
+        <div className="container-form flex flex-col w-96 h-80 items-center justify-center rounded">
           <h2 className="mb-5">Connexion</h2>
-          <form className="flex flex-col items-center justify-center gap-5">
+          <form
+            onSubmit={handleLogin}
+            className="flex flex-col items-center justify-center gap-5"
+          >
             <input
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               className="rounded border w-80"
               type="text"
+              placeholder="Username"
+            />
+            <input
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="rounded border w-80"
+              type="email"
               placeholder="Email"
             />
             <input
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               className=" rounded border w-80"
-              type="text"
+              type="password"
               placeholder="Mot de passe"
             />
             <div className="flex w-96 justify-around text-gray-500 text-sm">
