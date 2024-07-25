@@ -13,14 +13,12 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('category_id');
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            // $table->foreignId('category_id')->constrained();
             $table->string('name');
             $table->string('description');
-            $table->string('image') ->nullable();
+            $table->string('image');
             $table->decimal('price');
             $table->integer('stock');
-            $table->float('rating', 2) ->default(0);
             $table->timestamps();
         });
     }

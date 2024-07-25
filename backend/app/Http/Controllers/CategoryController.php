@@ -1,32 +1,23 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\Product;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
     //
     public function index()
     {
-        // $categories = Category::with('parentCategory')->get();
-        $categories = Category::where('parent_category', null)->get();
-        return response()->json($categories, 200);
-    }
-
-    public function getSubcategories($categoryId)
-    {
-        $subcategories = Category::where('parent_category', $categoryId)->get();
-        return response()->json($subcategories, 200);
+        $categories = Category::with('subCategories')->get();
+        return response()->json($categories, 201);
     }
 
     public function create()
     {
-        $categories = Category::with('parent_category')->all();
+        $categories = Category::all();
         return response()->json($categories, 201);
     }
 
@@ -40,28 +31,23 @@ class CategoryController extends Controller
         }
 
 
-        $validate = Validator::make($request->all(), [
+        $validatedData = $request->validate([
             'name' => 'required|string|max:255',
-            'description' => 'required|string|max:255',
-            'image' => 'required|image',
+            'subCategories' => 'nullable|string|max:255',
         ]);
 
 
-        if ($validate->fails()) {
-            return response(['message' => 'Validation error', 'errors' => $validate->errors()], 422);
+        $category = Category::create($validatedData);
+
+
+        if (!empty($request->subCategories)) {
+            $category->subCategories()->attach($request->subCategories);
         }
-        $random = Str::random(10);
-        $image_path = $request->file('image')->storeAs('public/categories', $request -> file('image')->getClientOriginalName());
 
-
-        $category = Category::create([
-            'name' => $request->name,
-            'description' => $request->description,
-            'image' => Storage::url($image_path),
-            'parent_category' => $request->parent_category
-        ]);
-
-
+        return response()->json([
+            'category' => $category,
+            'message' => 'Vous avez créé avec succes la categorie'
+        ], 200);
         return response()->json($category, 201);
     }
 
@@ -79,20 +65,22 @@ class CategoryController extends Controller
         $category = Category::findOrFail($id);
 
         return response()->json($category, 201);
-
     }
 
     public function update(Request $request, Int $id)
     {
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
-            'subCategories'=> 'nullable|string|max:255',
+            'subCategories' => 'nullable|string|max:255',
         ]);
         $category = Category::findOrFail($id);
 
         $category->update($validatedData);
 
-        return response()->json($validatedData, 201);
+        return response()->json([
+            'category' => $category,
+            'message' => 'Vous avez modifié avec succes la categorie'
+        ], 200);
     }
 
     public function destroy($id)
@@ -100,6 +88,9 @@ class CategoryController extends Controller
         $category = Category::findOrFail($id);
         $category->delete();
 
-        return response()->json($category, 201);
+        return response()->json([
+            'category' => $category,
+            'message' => 'Vous avez supprimé avec succes la categorie'
+        ], 200);
     }
 }

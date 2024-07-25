@@ -12,10 +12,11 @@ class CartController extends Controller
 {
     public function add(Request $request)
 {
-    $cart = Cart::where('user_id', 2)->first();
+    $user = auth() -> user();
+    $cart = Cart::where('user_id', $user -> id)->first();
     if (!$cart) {
         $cart = new Cart([
-            'user_id' => 1
+            'user_id' => $user -> id
         ]);
         $cart->save();
     }
@@ -40,10 +41,13 @@ class CartController extends Controller
 
 public function remove(Request $request)
 {
-    $cart = Cart::where('user_id', 2)->first();
+    $user = auth() -> user();
+    $cart = Cart::where('user_id', $user -> id)->first();
     if (!$cart) {
         return response()->json(['error' => 'Cart not found'], 404);
     }
+
+
 
     $itemOrder = $cart->itemOrders()->where('product_id', $request->product_id)->first();
     if ($itemOrder) {
@@ -60,7 +64,8 @@ public function remove(Request $request)
 
 public function removeItemOrder(Request $request)
 {
-    $cart = Cart::where('user_id', 2)->first();
+    $user = auth() -> user();
+    $cart = Cart::where('user_id', $user -> id)->first();
     if (!$cart) {
         return response()->json(['error' => 'Cart not found'], 404);
     }
@@ -75,7 +80,8 @@ public function removeItemOrder(Request $request)
 
 public function clearCart(Request $request)
 {
-    $cart = Cart::where('user_id', 2)->first();
+    $user = auth() -> user();
+    $cart = Cart::where('user_id', $user -> id)->first();
     if (!$cart) {
         return response()->json(['error' => 'Cart not found'], 404);
     }
@@ -87,13 +93,10 @@ public function clearCart(Request $request)
 
 public function view()
 {
-    if(!auth()->check()) {
-        $cart = Cart::where('user_id', 2)->first();
-        if (!$cart) {
-            return response()->json(['error' => 'Cart not found'], 404);
-        }
 
-        return response()->json($cart->with('itemOrders', 'itemOrders.product')->get());
+    if(!auth()->check()) {
+
+        return response()->json("Not authed");
     }
     $cart = Cart::where('user_id', auth()->user()->id)->first();
     if (!$cart) {
@@ -105,7 +108,7 @@ public function view()
 
     public function getCartItemsCount(Request $request)
     {
-        $cart = Cart::where('user_id', 2)->first();
+        $cart = Cart::where('user_id', 1)->first();
         if (!$cart) {
             return response()->json(['error' => 'Cart not found'], 404);
         }

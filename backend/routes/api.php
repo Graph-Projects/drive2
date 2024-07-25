@@ -53,6 +53,21 @@ Route::prefix('v1')->group(function () {
 });
 
 Route::prefix('v1')->group(function () {
+    Route::get('/subCategory', [SubCategoryController::class, 'index']);
+    Route::get('/subCategory/{id}', [SubCategoryController::class, 'show']);
+    Route::post('/subCategory', [SubCategoryController::class, 'store']);
+    Route::put('/subCategory/{id}', [SubCategoryController::class, 'update']);
+    Route::delete('/subCategory/{id}', [SubCategoryController::class, 'destroy']);
+});
+
+Route::prefix('v1')->group(function () {
+    Route::post('/categories/{categoryId}/sub-categories/{subCategoryId}', [CategorySubCategoryController::class, 'attachSubCategory']);
+    Route::delete('/categories/{categoryId}/sub-categories/{subCategoryId}', [CategorySubCategoryController::class, 'detachSubCategory']);
+    Route::get('/categories/{categoryId}/sub-categories', [CategorySubCategoryController::class, 'listSubCategories']);
+    Route::get('/sub-categories/{subCategoryId}/categories', [CategorySubCategoryController::class, 'listCategories']);
+});
+
+Route::prefix('v1')->group(function () {
     Route::get('/item-orders', [ItemOrderController::class, 'index']);
     Route::post('/item-orders', [ItemOrderController::class,'store']);
 });
