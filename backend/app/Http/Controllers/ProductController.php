@@ -48,27 +48,25 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $validate = Validator::make($request->all(), [
+        if ($request->has('categories') && !is_array($request->categories)) {
+            $categories = json_decode($request->categories, true);
+            $request->merge(["categories" => $categories]);
+        }
+
+        $request->validate([
             'name' => 'required|max:255',
             'description' => 'string',
             'image' => 'sometimes|image',
+            'categories' => 'sometimes|array',
             'price' => 'required',
             'stock' => 'sometimes',
-            "category_id" => "required",
         ]);
 
-        if ($validate->fails()) {
-            return response(['message' => 'Validation error', 'errors' => $validate->errors()], 422);
+        $product = Product::create($request->all());
+
+        if (!empty($request->categories)) {
+            $product->categories()->attach($categories);
         }
-
-        $product = Product::create([
-            'name' => $request->name,
-            'description' => $request->description,
-            'price' => $request->price,
-            'stock' => $request->stock,
-            'category_id' => $request->category_id,
-            "image" => "/storage/categories/carlos-muza-hpjSkU2UYSU-unsplash.jpg"
-        ]);
 
         if (!empty($request->image)) {
             $product->image = $request->image;
@@ -77,6 +75,7 @@ class ProductController extends Controller
 
         return response()->json([
             'product' => $product,
+            'categories' => $product->categories,
             'message' => 'Le produit ' . $product->name . ' a été créé avec succès'
         ], 200);
     }

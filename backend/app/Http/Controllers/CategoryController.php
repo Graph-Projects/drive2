@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\Product;
@@ -42,8 +43,6 @@ class CategoryController extends Controller
 
         $validate = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'description' => 'required|string|max:255',
-            'image' => 'required|image',
         ]);
 
 
@@ -51,13 +50,11 @@ class CategoryController extends Controller
             return response(['message' => 'Validation error', 'errors' => $validate->errors()], 422);
         }
         $random = Str::random(10);
-        $image_path = $request->file('image')->storeAs('public/categories', $request -> file('image')->getClientOriginalName());
+        $image_path = $request->file('image')->storeAs('public/categories', $request->file('image')->getClientOriginalName());
 
 
         $category = Category::create([
             'name' => $request->name,
-            'description' => $request->description,
-            'image' => Storage::url($image_path),
             'parent_category' => $request->parent_category
         ]);
 
@@ -79,14 +76,13 @@ class CategoryController extends Controller
         $category = Category::findOrFail($id);
 
         return response()->json($category, 201);
-
     }
 
     public function update(Request $request, Int $id)
     {
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
-            'subCategories'=> 'nullable|string|max:255',
+            'subCategories' => 'nullable|string|max:255',
         ]);
         $category = Category::findOrFail($id);
 

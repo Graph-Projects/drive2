@@ -16,10 +16,11 @@ class Product extends Model
         'description',
         'price',
         'stock',
-        'category_id',
+        'categories',
     ];
 
-    public function categories(){
+    public function categories()
+    {
         return $this->belongsTo(Category::class);
     }
 
@@ -40,9 +41,8 @@ class Product extends Model
 
     public function scopeWithSimilarTags($query, $tags)
     {
-        return $query->whereHas('tags', function($q) use ($tags) {
+        return $query->whereHas('tags', function ($q) use ($tags) {
             $q->whereIn('name', $tags);
         });
     }
-
 }

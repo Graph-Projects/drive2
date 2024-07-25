@@ -17,10 +17,10 @@ return new class extends Migration
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->string('name');
             $table->string('description');
-            $table->string('image') ->nullable();
+            $table->string('image')->nullable();
             $table->decimal('price');
             $table->integer('stock');
-            $table->float('rating', 2) ->default(0);
+            $table->float('rating', 2)->default(0);
             $table->timestamps();
         });
     }

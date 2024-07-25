@@ -13,11 +13,12 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+
 class AuthController extends Controller
 {
     public function register(Request $request)
     {
-        if(User::where('email', $request->email)->exists()) {
+        if (User::where('email', $request->email)->exists()) {
             return response()->json(['message' => 'User already exists'], 409);
         }
 
@@ -42,7 +43,7 @@ class AuthController extends Controller
         ]);
 
         Cart::create([
-            "user_id"=> $user->id,
+            "user_id" => $user->id,
         ]);
 
         return response()->json(['message' => 'User registered successfully'], 201);
@@ -59,7 +60,7 @@ class AuthController extends Controller
             return response(['message' => 'Validation error', 'errors' => $validate->errors()], 422);
         }
 
-        if(!User::where('email', $request->email)->exists()) {
+        if (!User::where('email', $request->email)->exists()) {
             return response()->json(['message' => 'No user found'], 401);
         }
 
@@ -71,7 +72,7 @@ class AuthController extends Controller
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([
-            'access_token' => $token,
+            'token' => $token,
             'token_type' => 'Bearer',
             'user' => $user
         ], 200);

@@ -10,8 +10,9 @@ use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\CategorySubCategoryController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\ItemOrderController;
+use App\Http\Controllers\UserController;
 use App\Models\Feedback;
-
+use App\Models\User;
 
 Route::prefix('v1')->group(function () {
     Route::get('/user', function (Request $request) {
@@ -19,11 +20,13 @@ Route::prefix('v1')->group(function () {
     })->middleware('auth:sanctum');
 });
 
-
+Route::prefix('v1')->group(function () {
+    Route::get('/users', [UserController::class, 'index']);
+});
 
 Route::prefix('v1')->group(function () {
     Route::post('/register', [AuthController::class, 'register']);
-    Route::post('/login', [AuthController::class, 'login']) -> name('api.login');
+    Route::post('/login', [AuthController::class, 'login'])->name('api.login');
     Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
     Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.reset');
 });
@@ -41,8 +44,8 @@ Route::prefix('v1')->group(function () {
     Route::post('/products/{id}/tags', [ProductController::class, 'addTags']);
     Route::get('/products/{id}/similar', [ProductController::class, 'getSimilarProducts']);
     Route::get('/products/{id}/frequently-bought-together', [ProductController::class, 'frequentlyBoughtTogether']);
-
 });
+
 Route::prefix('v1')->group(function () {
     Route::get('/categories', [CategoryController::class, 'index']);
     Route::get('/categories/{id}/subcategories', [CategoryController::class, 'getSubcategories']);
@@ -54,7 +57,7 @@ Route::prefix('v1')->group(function () {
 
 Route::prefix('v1')->group(function () {
     Route::get('/item-orders', [ItemOrderController::class, 'index']);
-    Route::post('/item-orders', [ItemOrderController::class,'store']);
+    Route::post('/item-orders', [ItemOrderController::class, 'store']);
 });
 
 Route::prefix('v1')->group(function () {
