@@ -14,6 +14,8 @@ import Categories from "./pages/Categories/Categories";
 import CategoriesUpdate from "./pages/Categories/CategoriesUpdate";
 
 import CategoryStore from "./pages/Categories/CategoryStore";
+import Register from "./pages/Auth/Register";
+import Login from "./pages/Auth/Login";
 
 function App() {
   return (
@@ -23,7 +25,8 @@ function App() {
           <Route path="/" element={<Homepage />}></Route>
           <Route path="/drive/products" element={<Products />}></Route>
           <Route path="/drive/catalogue" element={<Catalogue />}></Route>
-          {/* Categories */}
+
+          {/* Routes Categories */}
           <Route path="/drive/categories" element={<Categories />}></Route>
           <Route
             path="/drive/categories/:id/update"
@@ -33,7 +36,8 @@ function App() {
             path="/drive/category-store"
             element={<CategoryStore />}
           ></Route>
-          {/* Products */}
+
+          {/* Routes Products */}
           <Route path="/drive/products-list" element={<ProductList />}></Route>
           <Route path="/drive/product-store" element={<ProductStore />}></Route>
           <Route
@@ -41,6 +45,10 @@ function App() {
             element={<ProductUpdate />}
           ></Route>
           <Route path="/drive/product/:id" element={<ProductDetails />}></Route>
+
+          {/* Routes Products */}
+          <Route path="/drive/register" element={<Register />}></Route>
+          <Route path="/drive/login" element={<Login />}></Route>
         </Routes>
       </BrowserRouter>
     </>

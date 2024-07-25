@@ -7,6 +7,8 @@ import Card from "../components/Card/Card";
 import Footer from "../components/Footer/Footer";
 import CategoriesCard from "../components/Categories/CategoriesCard";
 
+//test pour la branche ;
+
 const Homepage = () => {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -40,7 +42,7 @@ const Homepage = () => {
         />
         <SearchBar />
         <div>
-          <NavLink to={"Inscription"}>Inscription / Connexion</NavLink>
+          <NavLink to={"drive/login"}>Inscription / Connexion</NavLink>
         </div>
       </div>
       <div className="flex justify-center m-3">

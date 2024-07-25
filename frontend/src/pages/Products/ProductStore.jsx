@@ -139,7 +139,7 @@ const ProductStore = () => {
           </div>
         </NavLink>
       </div>
-      <div className="container-form flex flex-col items-center p-12">
+      <div className=" flex flex-col items-center p-12">
         <form
           className="flex flex-col gap-4"
           onSubmit={storeProduct}

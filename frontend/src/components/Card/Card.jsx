@@ -23,6 +23,9 @@ const Card = ({ product }) => {
         <p> {product.price + "€"}</p>
         <h1> {product.categories ? "Categorie " + product.categories : ""}</h1>
         <div></div>
+        <div>
+          <button>Ajouter au panier</button>
+        </div>
       </div>
     </div>
   );
