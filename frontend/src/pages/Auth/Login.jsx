@@ -28,7 +28,7 @@ const Login = () => {
 
           // Sauvegarder le token dans le localStorage
           localStorage.setItem("token", token);
-          // navigate("/");
+          navigate("/");
         })
         .catch((error) => {
           console.error("There was an error with the login request:", error);
