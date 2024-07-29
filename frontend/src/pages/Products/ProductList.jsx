@@ -70,9 +70,9 @@ const ProductList = () => {
                 <img
                   className="w-20 rounded"
                   src={
-                    product.image ? getImageUrl(product.image) : product.image
+                    product.image ? getImageUrl(product.image) : product.name
                   }
-                  alt=""
+                  alt={"image de " + product.name}
                 />
                 <h3> {product.name}</h3>
                 <p> {product.price + "€"}</p>

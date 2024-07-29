@@ -24,10 +24,12 @@ const Login = () => {
         .post(`http://127.0.0.1:8000/api/v1/login`, data)
         .then((response) => {
           console.log(response);
-          const token = response.data.token; //  token est dans response.data.token
+          const token = response.data.access_token; //  token est dans response.data.token
 
           // Sauvegarder le token dans le localStorage
-          localStorage.setItem("token", token);
+          localStorage.setItem("token_drive", token);
+          console.log(token);
+
           navigate("/");
         })
         .catch((error) => {

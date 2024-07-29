@@ -8,23 +8,24 @@ const Card = ({ product }) => {
     }
   };
   return (
-    <div className="card gap -5 flex flex-col w-56">
+    <div className="card gap -5 flex flex-col max-h-72 w-56 border-r border-b">
       <NavLink to={`/drive/product/${product.id}`}>
-        {" "}
-        <img
-          className="w-20 rounded-md"
-          src={product.image ? getImageUrl(product.image) : product.image}
-          alt={"image de " + product.name}
-        />
+        <div className="flex justify-center">
+          <img
+            className="w-20 rounded-md"
+            src={product.image ? getImageUrl(product.image) : product.name}
+            alt={"image de " + product.name}
+          />
+        </div>
       </NavLink>
       <div className="flex flex-col">
         <h3> {product.name}</h3>
         <p> {product.description.slice(0, 20) + "..."}</p>
         <p> {product.price + "€"}</p>
-        <h1> {product.categories ? "Categorie " + product.categories : ""}</h1>
+        <p> {product.category ? "Categorie(s): " + product.category : null}</p>
         <div></div>
-        <div>
-          <button>Ajouter au panier</button>
+        <div className="flex justify-end">
+          <button className="flex mr-5">🛒</button>
         </div>
       </div>
     </div>
